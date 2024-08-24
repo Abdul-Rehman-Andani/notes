@@ -7,6 +7,7 @@ interface Props {
     title: string;
     note: string;
   };
+  color: string;
   handleData: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -19,6 +20,7 @@ const NoteInput: React.FC<Props> = ({
   handleData,
   handleSubmit,
   setColor,
+  color,
   setImg,
   value,
 }: Props) => {
@@ -42,32 +44,33 @@ const NoteInput: React.FC<Props> = ({
           value={value.note}
           onChange={handleData}
         ></textarea>
-        <input type="submit" value="Submit" />
+        <div className="features flex text-xl gap-4 font-bold">
+          <span onClick={() => setIsColor(!isColor)}>
+            <IoColorPaletteOutline />
+          </span>
+          <span>
+            <input
+              type="file"
+              name="img"
+              id="file"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setImg(e.target.files[0]);
+                } else {
+                  setImg(null); // Handle case when no file is selected
+                }
+              }}
+            />
+            <label htmlFor="file">
+              <IoImagesOutline />
+            </label>
+          </span>
+        </div>
+        <input type="submit" value="Add note" className="mt-4" />
       </form>
-      <div className="features flex text-xl gap-4 font-bold">
-        <span onClick={() => setIsColor(!isColor)}>
-          <IoColorPaletteOutline />
-        </span>
-        <span>
-          <input
-            type="file"
-            name="img"
-            id="file"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setImg(e.target.files[0]);
-              } else {
-                setImg(null); // Handle case when no file is selected
-              }
-            }}
-          />
-          <label htmlFor="file">
-            <IoImagesOutline />
-          </label>
-        </span>
-      </div>
-      {isColor && <ColorPalette setColor={setColor} />}
+
+      {isColor && <ColorPalette setColor={setColor} color={color} />}
     </div>
   );
 };

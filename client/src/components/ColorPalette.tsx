@@ -1,6 +1,7 @@
 import React from "react";
 
 interface Props {
+  color : string
   setColor: (c: string) => void;
 }
 
@@ -8,8 +9,11 @@ interface Color {
   color: string;
 }
 
-const ColorPalette: React.FC<Props> = ({ setColor }: Props) => {
-  const color: Color[] = [
+const ColorPalette: React.FC<Props> = ({ setColor, color }: Props) => {
+  const colors: Color[] = [
+    {
+      color : "white"
+    },
     {
       color: "pink",
     },
@@ -51,12 +55,12 @@ const ColorPalette: React.FC<Props> = ({ setColor }: Props) => {
   return (
     <>
       <div className="color-palette flex justify-between mt-3">
-        {color.map((clr, i) => {
+        {colors.map((clr, i) => {
           return (
             <div
               key={i}
               onClick={() => setColor(clr.color)}
-              style={{ backgroundColor: clr.color }}
+              style={{ backgroundColor: clr.color, border : clr.color == color ? "1px solid black" : "" }}
               className={`w-[20px] h-[20px] rounded-[50px]`}
             ></div>
           );

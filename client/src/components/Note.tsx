@@ -8,9 +8,10 @@ interface Props {
   note: NoteType;
   updateNote : (id :string) => void
   delNote : (id : string) => void
+  getNote : (id : string) => void
 }
 
-const Note: React.FC<Props> = ({ note ,updateNote ,delNote}: Props) => {
+const Note: React.FC<Props> = ({ note ,updateNote ,delNote, getNote}: Props) => {
   return (
     <div className={`note border rounded-md ${note.color == "black" && "text-white"}`} style={{backgroundColor : note.color}}>
       {note.img && (
@@ -20,7 +21,7 @@ const Note: React.FC<Props> = ({ note ,updateNote ,delNote}: Props) => {
         <h2 className="font-bold text-lg">{note.title}</h2>
         <p>{note.note}</p>
         <p className="flex justify-end  gap-2">
-          <span onClick={() => updateNote(note._id)}>
+          <span onClick={() => getNote(note._id)}>
             <MdOutlineModeEdit />
           </span>
           <span onClick={() => delNote(note._id)}>
