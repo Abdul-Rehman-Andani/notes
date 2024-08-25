@@ -9,7 +9,6 @@ import noteRouter from "./routes/note.route.js";
 
 const app = expess();
 
-
 // app middleware
 app.use(cors({credentials : true, origin : ["http://localhost:5173", "http://localhost:9000"]}));
 app.use(expess.json());

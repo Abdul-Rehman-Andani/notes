@@ -47,8 +47,9 @@ export const del = async (req, res) => {
 // endpoint for update
 export const upadte = async (req, res) => {
   const { id } = req.params;
-  try {
-    await Note.findOneAndUpdate({ _id: id }, req.body, { new: true });
+  const {title , note ,color} = req.body;
+   try {
+    await Note.findOneAndUpdate({ _id: id }, { title , note ,color }, { new: true });
     return res.json({ success: true, message: "updated" });
   } catch (error) {
     return res.json({ success: false, message: error.message });
