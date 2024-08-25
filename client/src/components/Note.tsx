@@ -6,14 +6,13 @@ import { MdOutlineModeEdit } from "react-icons/md";
 // Define the props interface
 interface Props {
   note: NoteType;
-  updateNote : (id :string) => void
   delNote : (id : string) => void
   getNote : (id : string) => void
 }
 
-const Note: React.FC<Props> = ({ note ,updateNote ,delNote, getNote}: Props) => {
+const Note: React.FC<Props> = ({ note  ,delNote, getNote}: Props) => {
   return (
-    <div className={`note border rounded-md ${note.color == "black" && "text-white"}`} style={{backgroundColor : note.color}}>
+    <div className={`note border masonry-item rounded-md ${note.color == "black" && "text-white"}`} style={{backgroundColor : note.color}}>
       {note.img && (
         <img src={`http://localhost:9000/images/${note.img}`} alt="img" />
       )}

@@ -11,5 +11,18 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addComponents }) {
+      addComponents({
+        '.masonry': {
+          columnCount: '3',
+          columnGap: '1rem',
+        },
+        '.masonry-item': {
+          breakInside: 'avoid',
+          marginBottom: '1rem',
+        },
+      })
+    },
+  ],
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { NoteInput, Note, Model,EditNote } from "../components/component";
+import { NoteInput, Note, EditNote } from "../components/component";
 import { useNavigate } from "react-router-dom";
 import { Note as NoteType } from "../model/model";
 import { useSelector, useDispatch } from "react-redux";
-import { open } from "../features/modelSlice";
+import { open , close} from "../features/modelSlice";
 import axios from "axios";
 
 // Define the interface for the slice of the state
@@ -29,7 +29,8 @@ const Home: React.FC = () => {
   const [img, setImg] = useState<File | null>(null); // Initialize with null
   const [notes, setNotes] = useState<Array<NoteType>>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-  const [showNote, setShowNote] = useState<NoteType>();
+  const [showNote, setShowNote] = useState<NoteType>({_id : "", title : "", note : "", color : "white",});
+  const [editNote, setEditNote] = useState<NoteType | undefined>(); // Add type here
 
   // Properly type the useSelector hook
   const model = useSelector((state: RootState) => state.model.model);
@@ -64,7 +65,6 @@ const Home: React.FC = () => {
         setColor("white");
         setIsFetching(true);
       }
-      console.log(res);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -81,37 +81,54 @@ const Home: React.FC = () => {
     }
   };
 
-  const updateNote = async (id: string) => {
-    // Implementation here
+  const updateNote = async (e: React.FormEvent<HTMLFormElement>, id: string) => {
+    // Placeholder for updating note
+    e.preventDefault();
+    const res = await axios.patch(`http://localhost:9000/note/${id}`, showNote);
+    if(res.data.message == "updated"){
+      setIsFetching(true);
+      dispatch(close());
+    }
   };
 
-  const delNote = async (id: string) => {
-    const res = await axios.delete(`http://localhost:9000/note/${id}`);
-    if (res.data.message === "deleted") {
-      setIsFetching(true);
+  const delNote = async ( id: string) => {
+    try {
+      const res = await axios.delete(`http://localhost:9000/note/${id}`);
+      if (res.data.message === "deleted") {
+        setIsFetching(true);
+      }
+    } catch (error) {
+      console.error("Error deleting note:", error);
     }
   };
 
   const getNote = async (id: string) => {
     dispatch(open());
-    const res = await axios.get(`http://localhost:9000/note/${id}`);
-    setShowNote(res.data);
+    try {
+      const res = await axios.get(`http://localhost:9000/note/${id}`);
+      setShowNote(res.data);
+    } catch (error) {
+      console.error("Error fetching note:", error);
+    }
   };
+
+
+  const handleEdit = (e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setShowNote({...showNote, [e.target.name] : e.target.value});
+  }
 
   useEffect(() => {
     if (!document.cookie.includes("token")) {
       navigate("/signin");
-    } else {
-      if (isFetching) {
-        getNotes();
-        setIsFetching(false);
-      }
+    } else if (isFetching) {
+      getNotes();
+      setIsFetching(false);
     }
   }, [isFetching, navigate]);
 
   return (
     <>
-      {model && <EditNote />}
+      {model && <EditNote note={showNote} handleInput={handleEdit} handleForm={updateNote}/>}
       <div className="grid place-items-center">
         <div className="note">
           <NoteInput
@@ -124,13 +141,12 @@ const Home: React.FC = () => {
           />
         </div>
       </div>
-      <div className="notes grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-4 mt-10 gap-4">
+      <div className="notes masonry xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-4 mt-10 gap-4">
         {notes.map((note: NoteType, i: number) => (
           <Note
             note={note}
             key={i}
             delNote={delNote}
-            updateNote={updateNote}
             getNote={getNote}
           />
         ))}

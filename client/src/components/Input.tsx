@@ -4,7 +4,8 @@ interface Props {
   readonly type: string;
   readonly name: string;
   readonly placeholder: string;
-  readonly icon: ReactNode;
+  readonly icon?: ReactNode;
+  value? : string
   handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -14,6 +15,7 @@ const Input: React.FC<Props> = ({
   placeholder,
   icon,
   handleInput,
+  value
 }: Props) => {
   return (
     <>
@@ -25,6 +27,7 @@ const Input: React.FC<Props> = ({
           name={name}
           onChange={handleInput}
           className="outline-none bg-slate-100 "
+          value={value}
         />
       </div>
     </>

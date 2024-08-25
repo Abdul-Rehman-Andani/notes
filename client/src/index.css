@@ -1,3 +1,29 @@
+/* styles.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom masonry layout */
+@layer utilities {
+  .masonry {
+    column-count: 4;
+    column-gap: 1rem;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .masonry {
+      column-count: 1;
+    }
+  }
+}
