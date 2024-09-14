@@ -1,6 +1,7 @@
 import {User} from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { setToken } from "../utils/setToken.js";
+import {sendEmail} from "../utils/mailer.js";
 
 export const signup = async (req, res) => {
     const { name, email, password } = req.body;
@@ -44,6 +45,11 @@ export const signup = async (req, res) => {
       return res
         .cookie("token", token).cookie("name", user.name)
         .json({ success: true, message: "user login" });
+
+      // await sendEmail(email, "verify", user._id);
+
+      // return res.json("ckeck mail");
+
     } catch (error) {
       return res.status(500).json({ status: false, message: error.message });
     }

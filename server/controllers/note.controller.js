@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Note } from "../models/note.model.js";
 
 // endpoint for create
@@ -60,6 +61,12 @@ export const upadte = async (req, res) => {
 export const show = async (req, res) => {
   const { id } = req.params;
   try {
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error("Invalid ID");
+    }
+    
+
     const note = await Note.findOne({ _id: id }).select("-userId");
     return res.json(note);
   } catch (error) {
