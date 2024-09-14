@@ -29,7 +29,7 @@ const EditNote: React.FC<Props> = ({ note, handleInput, handleForm }: Props) => 
       </span>
 
       <div className="md-container w-full mx-auto">
-        <div className="w-1/4 mx-auto">
+        <div className="max-w-md mx-auto bg-white p-3 rounded-lg">
           <form onSubmit={onSubmit}>
             <Input
               type="text"

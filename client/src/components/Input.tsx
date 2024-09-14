@@ -26,7 +26,7 @@ const Input: React.FC<Props> = ({
           placeholder={placeholder}
           name={name}
           onChange={handleInput}
-          className="outline-none bg-slate-100 "
+          className="outline-none bg-slate-100 flex-1 "
           value={value}
         />
       </div>

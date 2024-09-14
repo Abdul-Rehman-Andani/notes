@@ -27,9 +27,10 @@ const SignIn = () => {
     const res = await axios.post(`http://localhost:9000/auth/signin`, data, {
       withCredentials: true,
     });
-    if (res.data.message == "user login") {
-      navigate("/");
-    }
+    // if (res.data.message == "user login") {
+    //   navigate("/");
+    // }
+    console.log(res);
   };
 
   useEffect(() => {

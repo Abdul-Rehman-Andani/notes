@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ColorPalette } from "../components/component";
+import { ColorPalette, SubmitButton } from "../components/component";
 import { IoImagesOutline, IoColorPaletteOutline } from "react-icons/io5";
 
 interface Props {
@@ -27,7 +27,7 @@ const NoteInput: React.FC<Props> = ({
   const [isColor, setIsColor] = useState(false);
 
   return (
-    <div className="note-input shadow-xl px-4 py-3 rounded-lg">
+    <div className=" max-w-md mx-auto shadow-xl px-4 py-3 rounded-lg">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -67,7 +67,7 @@ const NoteInput: React.FC<Props> = ({
             </label>
           </span>
         </div>
-        <input type="submit" value="Add note" className="mt-4" />
+        <SubmitButton value="Add note" />
       </form>
 
       {isColor && <ColorPalette setColor={setColor} color={color} />}

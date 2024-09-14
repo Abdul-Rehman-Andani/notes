@@ -29,8 +29,7 @@ const Home: React.FC = () => {
   const [img, setImg] = useState<File | null>(null); // Initialize with null
   const [notes, setNotes] = useState<Array<NoteType>>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-  const [showNote, setShowNote] = useState<NoteType>({_id : "", title : "", note : "", color : "white",});
-  const [editNote, setEditNote] = useState<NoteType | undefined>(); // Add type here
+  const [showNote, setShowNote] = useState<NoteType>({_id : "", title : "", note : "", color : "white"});
 
   // Properly type the useSelector hook
   const model = useSelector((state: RootState) => state.model.model);
@@ -106,6 +105,7 @@ const Home: React.FC = () => {
     dispatch(open());
     try {
       const res = await axios.get(`http://localhost:9000/note/${id}`);
+      console.log(res.data)
       setShowNote(res.data);
     } catch (error) {
       console.error("Error fetching note:", error);
@@ -129,7 +129,6 @@ const Home: React.FC = () => {
   return (
     <>
       {model && <EditNote note={showNote} handleInput={handleEdit} handleForm={updateNote}/>}
-      <div className="grid place-items-center">
         <div className="note">
           <NoteInput
             handleData={handleData}
@@ -139,7 +138,6 @@ const Home: React.FC = () => {
             setImg={setImg}
             value={data}
           />
-        </div>
       </div>
       <div className="notes masonry xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-4 mt-10 gap-4">
         {notes.map((note: NoteType, i: number) => (

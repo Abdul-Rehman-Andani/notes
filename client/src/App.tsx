@@ -2,8 +2,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, Remainder, Trash, SignIn, SignUp, SignOut } from "./pages/page";
 import { SideBar, NavBar } from "./components/component";
 import "./App.css";
+import {  useDispatch, useSelector } from "react-redux";
+
 
 const App = () => {
+
+  const dispatch = useDispatch();
+  const {active} = useSelector((store : any) => store.sidebar);
+
   return (
     <>
       <BrowserRouter>
@@ -11,7 +17,7 @@ const App = () => {
           <NavBar />
         </nav>
         <div className="flex">
-          <aside className="w-[300px] mt-5">
+          <aside className="w-[300px] mt-5" style={{left : active ? "0" : ""}}>
             <SideBar />
           </aside>
 

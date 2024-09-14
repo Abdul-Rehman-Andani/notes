@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors : {
-        model : "rgba(0,0,0,0.6)"
+        model : "rgba(0,0,0,0.6)",
+        submit : "#fabd03"
       },
     },
   },
