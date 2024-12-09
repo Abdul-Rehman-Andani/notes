@@ -1,19 +1,22 @@
 import dotenv from "dotenv";
-dotenv.config();
-import expess from "express";
+import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import helmet from "helmet";
 import { connectDB } from "./utils/connection.js";
 import userRouter from "./routes/user.route.js";
 import noteRouter from "./routes/note.route.js";
+import { errorHandler } from "./middlewares/error.js";
 
-const app = expess();
+const app = express();
+dotenv.config();
 
 // app middleware
 app.use(cors({credentials : true, origin : ["http://localhost:5173", "http://localhost:9000"]}));
-app.use(expess.json());
-app.use(expess.urlencoded({extended : true}));
-app.use(expess.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+app.use(express.static("public"));
+app.use(helmet()); // prevents XSS attack
 app.use(cookieParser());
 
 // api routes middlewares
@@ -25,3 +28,6 @@ app.listen(process.env.PORT, () => {
     connectDB();
     console.log("server");
 });
+
+
+app.use(errorHandler);

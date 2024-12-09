@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Note } from "../models/note.model.js";
+import { ErrorHandler } from "../utils/errorHandler.js";
 
 // endpoint for create
 export const create = async (req, res) => {
@@ -58,12 +59,12 @@ export const upadte = async (req, res) => {
 };
 
 // endpoint for single
-export const show = async (req, res) => {
+export const show = async (req, res, next) => {
   const { id } = req.params;
   try {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("Invalid ID");
+      return next(new ErrorHandler("invalid id", 400));
     }
     
 
