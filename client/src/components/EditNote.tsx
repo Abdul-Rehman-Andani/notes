@@ -30,6 +30,7 @@ const EditNote: React.FC<Props> = ({ note, handleInput, handleForm }: Props) => 
 
       <div className="md-container w-full mx-auto">
         <div className="max-w-md mx-auto bg-white p-3 rounded-lg">
+          <h1 className="text-2xl">Edit note</h1>
           <form onSubmit={onSubmit}>
             <Input
               type="text"

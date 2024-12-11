@@ -142,6 +142,7 @@ const Home: React.FC = () => {
       <div className="notes masonry xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-4 mt-10 gap-4">
         {notes.map((note: NoteType, i: number) => (
           <Note
+          setIsFetching={setIsFetching}
             note={note}
             key={i}
             delNote={delNote}

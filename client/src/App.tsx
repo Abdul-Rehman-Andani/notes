@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Remainder, Trash, SignIn, SignUp, SignOut } from "./pages/page";
+import { Home,  Completed, SignIn, SignUp, SignOut } from "./pages/page";
 import { SideBar, NavBar } from "./components/component";
 import "./App.css";
 import {  useDispatch, useSelector } from "react-redux";
@@ -25,8 +25,7 @@ const App = () => {
             <div className="md:container mx-auto">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/reminder" element={<Remainder />} />
-                <Route path="/trash" element={<Trash />} />
+                <Route path="/completed" element={<Completed />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/signout" element={<SignOut />} />

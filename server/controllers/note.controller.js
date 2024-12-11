@@ -28,7 +28,17 @@ export const create = async (req, res) => {
 // endpoint for raed
 export const read = async (req, res) => {
   try {
-    const notes = await Note.find({ userId: req.id }).select("-userId");
+    const notes = await Note.find({ $and : [{userId : req.id}, {status : "todo"}]}).select("-userId");
+    return res.json(notes);
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+// for completed
+export const completed = async (req, res) => {
+  try {
+    const notes = await Note.find({ $and : [{userId : req.id}, {status : "completed"}]}).select("-userId");
     return res.json(notes);
   } catch (error) {
     return res.json({ success: false, message: error.message });
@@ -58,15 +68,21 @@ export const upadte = async (req, res) => {
   }
 };
 
+
+export const upadteStatus = async (req, res) => {
+  try {
+    const {id} = req.params;
+    await Note.findOneAndUpdate({_id : id}, {status : "completed"}, {new : true});
+    return res.json({ success: true, message: "status updated" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+}
+ 
 // endpoint for single
 export const show = async (req, res, next) => {
   const { id } = req.params;
   try {
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return next(new ErrorHandler("invalid id", 400));
-    }
-    
 
     const note = await Note.findOne({ _id: id }).select("-userId");
     return res.json(note);
@@ -74,3 +90,4 @@ export const show = async (req, res, next) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
