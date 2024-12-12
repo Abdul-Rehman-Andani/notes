@@ -10,7 +10,6 @@ const SideBar : React.FC = () => {
     <>
       <ul>
         <SideBarItem name={`Home`} icon={<MdOutlineLightbulb />} path={`/`}/>
-        <SideBarItem name={`Reminders`} icon={<BiBell />} path={`/reminder`} />
         <SideBarItem name={`Completed`} icon={<MdOutlineCloudDone />} path={`/completed`} />
       </ul>
     </>

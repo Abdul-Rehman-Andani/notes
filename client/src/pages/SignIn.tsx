@@ -30,7 +30,9 @@ const SignIn = () => {
     // if (res.data.message == "user login") {
     //   navigate("/");
     // }
-    console.log(res);
+    if(res.data.message == "user login"){
+      navigate("/")
+    }
   };
 
   useEffect(() => {
