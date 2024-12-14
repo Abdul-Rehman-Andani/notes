@@ -43,7 +43,7 @@ const Completed = () => {
       {notes.length > 0 ? (
         notes.map((n: NoteType, i: number) => (
           <div key={n._id} className="note border masonry-item rounded-md">
-            {n?.img && <img src={n?.img} alt="img" />}
+            {n?.img && <img src={`http://localhost:9000/images/${n.img}`} alt="img" />}
             <div className={`p-3`} style={{ backgroundColor: n?.color }}>
               <h3>{n.title}</h3>
               <p>{n.note}</p>
